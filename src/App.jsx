@@ -1,47 +1,49 @@
 import { useState, useEffect } from "react";
-import "./App.css";
+import TodoInput from "./components/TodoInput";
+import TodoItem from "./components/TodoItem";
 
 function App() {
   const [tasks, setTasks] = useState(() => {
-  return JSON.parse(localStorage.getItem("tasks")) || [];
-});
+    return JSON.parse(localStorage.getItem("tasks")) || [];
+  });
+
   const [input, setInput] = useState("");
-useEffect(() => {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}, [tasks]);
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   function addTask() {
-    if (input === "") return;
+    if (input.trim() === "") return;
     setTasks([...tasks, input]);
     setInput("");
   }
 
   function deleteTask(index) {
-    const newTasks = tasks.filter((_, i) => i !== index);
-    setTasks(newTasks);
+    setTasks(tasks.filter((_, i) => i !== index));
   }
 
   return (
-    <div className="container">
-      <h1>React To-Do</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600">
+      <div className="bg-white w-[360px] p-6 rounded-xl shadow-xl transition-transform hover:scale-[1.02]">
+        <h1 className="text-2xl font-bold text-center mb-4">React To-Do</h1>
 
-      <div className="input-row">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter a task"
+        <TodoInput
+          input={input}
+          setInput={setInput}
+          addTask={addTask}
         />
-        <button onClick={addTask}>Add</button>
-      </div>
 
-      <ul>
-        {tasks.map((task, index) => (
-          <li key={index}>
-            {task}
-            <button onClick={() => deleteTask(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+        <ul className="mt-4 space-y-2">
+          {tasks.map((task, index) => (
+            <TodoItem
+              key={index}
+              task={task}
+              onDelete={() => deleteTask(index)}
+            />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

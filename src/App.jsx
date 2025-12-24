@@ -24,17 +24,15 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 to-purple-600">
-      <div className="bg-white w-[360px] p-6 rounded-xl shadow-xl transition-transform hover:scale-[1.02]">
-        <h1 className="text-2xl font-bold text-center mb-4">React To-Do</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-4">
+      <div className="bg-white w-full max-w-md p-6 rounded-2xl shadow-2xl border border-gray-100">
+        <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
+          📝 React To-Do
+        </h1>
 
-        <TodoInput
-          input={input}
-          setInput={setInput}
-          addTask={addTask}
-        />
+        <TodoInput input={input} setInput={setInput} addTask={addTask} />
 
-        <ul className="mt-4 space-y-2">
+        <ul className="space-y-3 mt-4">
           {tasks.map((task, index) => (
             <TodoItem
               key={index}
